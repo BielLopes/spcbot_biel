@@ -2,7 +2,7 @@
 
 <launch>
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
-    <arg name="world_name" value="$(find spcbot_gazebo)/worlds/complete_boxs.world"/>
+    <arg name="world_name" value="$(find spcbot_gazebo)/worlds/scan_bar.world"/>
     <arg name="paused" value="false"/>
     <arg name="use_sim_time" value="true"/>
     <arg name="gui" value="true"/>
@@ -11,18 +11,15 @@
   </include>
 
   <!-- Convert an xacro and put on parameter server -->
-  <param name="robot_description" command="xacro '$(find spcbot_description)/urdf/spcbot.urdf.xacro'" />
+  <param name="robot_description" command="xacro '$(find spcbot_description)/urdf/scanner_bot.urdf.xacro'" />
 
   <!-- Spawn a robot into Gazebo -->
   <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" output="screen"
-        args="-param robot_description -urdf -model spcbot
-        -x 2.5 -y 2.5 -z 0" />
+        args="-param robot_description -urdf -model scanner_bot
+        -x 0 -y 16 -z 0" />
 
   <!-- Robots state publisher -->
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" output="screen" />
-
-  <!-- Starting Joint state publisher node which will publish the joint values   -->
-  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
 
 </launch>
 

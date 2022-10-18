@@ -157,7 +157,7 @@
     <joint_properties damping="0.0" friction="0.0"/>
   </joint>
 
-
+  <!-- Camera -->
   <link name="camera_link">
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>

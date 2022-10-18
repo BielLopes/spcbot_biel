@@ -1,0 +1,119 @@
+<?xml version='1.0'?>
+
+<robot name="scanner_bot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  
+  <xacro:include filename="$(find spcbot_description)/urdf/scanner_bot.gazebo.xacro"/>
+
+    <!-- <link name='base_link'>
+        <pose>0 0 0 0 0 0</pose>
+
+        <inertial>
+            <mass value="9.0"/>
+            <origin xyz="0 0 0" rpy=" 0 0 0"/>
+            <inertia
+                ixx="0.00001" ixy="0" ixz="0"
+                iyy="0.00001" iyz="0"
+                izz="0.00001"
+            />
+        </inertial>
+
+        <collision name='base_collision'>
+            <geometry>
+                <box size="100 100 0.1"/>
+            </geometry>
+        </collision>
+
+        <visual name='base_visual'>
+            <origin xyz="0 0 0" rpy=" 0 0 0"/>
+            <geometry>
+                <box size="100 100 0.1"/>
+            </geometry>
+            <material name="black"/>
+        </visual>
+
+    </link> -->
+
+
+
+    <link name='pillar_bar_link'>
+        <pose>0 0 5 0 0 0</pose>
+
+        <inertial>
+        <mass value="50.0"/>
+        <origin xyz="0 0 5" rpy=" 0 0 0"/>
+        <inertia
+            ixx="99999999.0" ixy="0" ixz="0"
+            iyy="99999999.0" iyz="0"
+            izz="99999999.0"
+        />
+        </inertial>
+
+        <collision name='pillar_bar_collision'>
+            <geometry>
+                <box size="1 1 10"/>
+            </geometry>
+        </collision>
+
+        <visual name='pillar_bar_visual'>
+            <origin xyz="0 0 0" rpy=" 0 0 0"/>
+            <geometry>
+                <box size="1 1 10"/>
+            </geometry>
+            <material name="black"/>
+        </visual>
+
+    </link>
+
+    <!-- Hokuyo Laser -->
+    <link name="hokuyo_link">
+        <collision name='collision'>
+            <origin xyz="1 1 1" rpy="0 0 0"/>
+            <geometry>
+                <box size="0.1 0.1 0.1"/>
+            </geometry>
+        </collision>
+
+        <visual name='visual'>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="/home/gabriel/Repos/gerdau/simularions/hokuyo.dae"/>
+            </geometry>
+        </visual>
+
+        <inertial>
+            <mass value="1e-5" />
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+        <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6" />
+        </inertial>
+    </link>
+   
+    <joint type="prismatic" name="arm">
+        <origin xyz="0 -1 -1.9" rpy="0 1.570796 -1.570796"/>
+        
+        <child link="hokuyo_link"/>
+        <parent link="pillar_bar_link"/>
+        <axis xyz="0 0 1" rpy="0 0 0"/>
+        <limit effort="0.000005" velocity="0.3" lower="0" upper="40"/>
+        <joint_properties damping="20.0" friction="100.0"/>
+    </joint>
+
+    <!-- Lidar Motion -->
+    <!-- <joint name="arm" type="prismatic">
+        <parent>pillar_bar_link</parent>
+        <child>hokuyo_link</child>
+        <origin xyz="0.0 0.6 8" rpy="0 0 0"/>
+        <axis>
+            <xyz>0 1 0</xyz>
+            <limit>
+                <lower>0</lower>
+                <upper>5</upper>
+                <effort>10</effort>
+            </limit>
+
+            <dynamics>
+                <damping>2</damping>
+            </dynamics>
+        </axis>
+    </joint> -->
+
+</robot>
